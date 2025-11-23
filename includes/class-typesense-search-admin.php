@@ -103,6 +103,7 @@ class Typesense_Search_Admin {
         register_setting('typesense_search_settings', 'typesense_search_api_key');
         register_setting('typesense_search_settings', 'typesense_search_collection_prefix');
         register_setting('typesense_search_settings', 'typesense_search_placeholder_text');
+        register_setting('typesense_search_settings', 'typesense_search_show_stock_status');
         
         // Color settings
         register_setting('typesense_search_settings', 'typesense_search_primary_color');
@@ -131,6 +132,7 @@ class Typesense_Search_Admin {
             update_option('typesense_search_api_key', sanitize_text_field($_POST['typesense_search_api_key']));
             update_option('typesense_search_collection_prefix', sanitize_text_field($_POST['typesense_search_collection_prefix']));
             update_option('typesense_search_placeholder_text', sanitize_text_field($_POST['typesense_search_placeholder_text']));
+            update_option('typesense_search_show_stock_status', isset($_POST['typesense_search_show_stock_status']) ? '1' : '0');
             
             // Save color settings
             update_option('typesense_search_primary_color', sanitize_hex_color($_POST['typesense_search_primary_color']));
@@ -155,6 +157,7 @@ class Typesense_Search_Admin {
         $api_key = get_option('typesense_search_api_key', '');
         $collection_prefix = get_option('typesense_search_collection_prefix', '');
         $placeholder_text = get_option('typesense_search_placeholder_text', __('Hledat...', 'typesense-search'));
+        $show_stock_status = get_option('typesense_search_show_stock_status', '1');
         
         // Color settings with defaults
         $primary_color = get_option('typesense_search_primary_color', '#064740');
@@ -236,6 +239,17 @@ class Typesense_Search_Admin {
                         <td>
                             <input type="text" id="typesense_search_placeholder_text" name="typesense_search_placeholder_text" value="<?php echo esc_attr($placeholder_text); ?>" class="regular-text" />
                             <p class="description"><?php esc_html_e('Text zobrazený ve vyhledávacím poli, když je prázdné.', 'typesense-search'); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="typesense_search_show_stock_status"><?php esc_html_e('Zobrazit stav skladu', 'typesense-search'); ?></label>
+                        </th>
+                        <td>
+                            <label>
+                                <input type="checkbox" id="typesense_search_show_stock_status" name="typesense_search_show_stock_status" value="1" <?php checked($show_stock_status, '1'); ?> />
+                                <?php esc_html_e('Zobrazit informaci o skladové dostupnosti ve výsledcích vyhledávání.', 'typesense-search'); ?>
+                            </label>
                         </td>
                     </tr>
                 </table>

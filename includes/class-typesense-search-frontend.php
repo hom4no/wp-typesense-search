@@ -189,9 +189,9 @@ class Typesense_Search_Frontend {
      * Načíst skripty a styly
      */
     public function enqueue_scripts(): void {
-        // Načíst skripty pouze pokud je shortcode na stránce
-        global $post;
-        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'typesense_search')) {
+        // Načíst skripty globálně na frontendu pro všechny stránky,
+        // abychom předešli FOUC (Flash of Unstyled Content) při rychlé navigaci
+        if (!is_admin()) {
             $this->enqueue_search_scripts();
         }
         
@@ -248,6 +248,7 @@ class Typesense_Search_Frontend {
         $text_color = get_option('typesense_search_text_color', '#334155');
         $mobile_breakpoint = get_option('typesense_search_mobile_breakpoint', '1050');
         $enable_mobile_fullscreen = get_option('typesense_search_enable_mobile_fullscreen', '1');
+        $show_stock_status = get_option('typesense_search_show_stock_status', '1');
         
         // Border Radius Settings
         $border_radius_key = get_option('typesense_search_border_radius', 'm');
@@ -475,6 +476,15 @@ class Typesense_Search_Frontend {
             }
         ";
         
+        // Hide stock status if disabled
+        if ($show_stock_status !== '1') {
+            $custom_css .= "
+            .typesense-search-product-stock {
+                display: none !important;
+            }
+            ";
+        }
+        
         // Add mobile fullscreen styles only if enabled
         if ($enable_mobile_fullscreen === '1') {
             $custom_css .= "
@@ -612,7 +622,9 @@ class Typesense_Search_Frontend {
      * @return string
      */
     public function render_search_bar(array $atts = array()): string {
-        // Načíst skripty když je shortcode použit
+        // Skripty se načítají globálně v enqueue_scripts, 
+        // ale pro jistotu je zavoláme i zde, pokud by se shortcode použil mimo standardní flow
+        // wp_enqueue_style/script() automaticky ošetří, aby se nenačetly dvakrát
         $this->enqueue_search_scripts();
         
         $default_placeholder = get_option('typesense_search_placeholder_text', __('Hledat...', 'typesense-search'));
