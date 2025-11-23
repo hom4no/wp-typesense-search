@@ -102,6 +102,7 @@ class Typesense_Search_Admin {
         register_setting('typesense_search_settings', 'typesense_search_protocol');
         register_setting('typesense_search_settings', 'typesense_search_api_key');
         register_setting('typesense_search_settings', 'typesense_search_collection_prefix');
+        register_setting('typesense_search_settings', 'typesense_search_placeholder_text');
         
         // Color settings
         register_setting('typesense_search_settings', 'typesense_search_primary_color');
@@ -129,6 +130,7 @@ class Typesense_Search_Admin {
             update_option('typesense_search_protocol', sanitize_text_field($_POST['typesense_search_protocol']));
             update_option('typesense_search_api_key', sanitize_text_field($_POST['typesense_search_api_key']));
             update_option('typesense_search_collection_prefix', sanitize_text_field($_POST['typesense_search_collection_prefix']));
+            update_option('typesense_search_placeholder_text', sanitize_text_field($_POST['typesense_search_placeholder_text']));
             
             // Save color settings
             update_option('typesense_search_primary_color', sanitize_hex_color($_POST['typesense_search_primary_color']));
@@ -152,6 +154,7 @@ class Typesense_Search_Admin {
         $protocol = get_option('typesense_search_protocol', 'http');
         $api_key = get_option('typesense_search_api_key', '');
         $collection_prefix = get_option('typesense_search_collection_prefix', '');
+        $placeholder_text = get_option('typesense_search_placeholder_text', __('Hledat...', 'typesense-search'));
         
         // Color settings with defaults
         $primary_color = get_option('typesense_search_primary_color', '#064740');
@@ -220,6 +223,19 @@ class Typesense_Search_Admin {
                         <td>
                             <input type="text" id="typesense_search_collection_prefix" name="typesense_search_collection_prefix" value="<?php echo esc_attr($collection_prefix); ?>" class="regular-text" />
                             <p class="description"><?php esc_html_e('Prefix pro názvy kolekcí (např. "myshop_"). Užitečné při použití jednoho serveru pro více webů.', 'typesense-search'); ?></p>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2><?php esc_html_e('Nastavení vzhledu', 'typesense-search'); ?></h2>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">
+                            <label for="typesense_search_placeholder_text"><?php esc_html_e('Placeholder text', 'typesense-search'); ?></label>
+                        </th>
+                        <td>
+                            <input type="text" id="typesense_search_placeholder_text" name="typesense_search_placeholder_text" value="<?php echo esc_attr($placeholder_text); ?>" class="regular-text" />
+                            <p class="description"><?php esc_html_e('Text zobrazený ve vyhledávacím poli, když je prázdné.', 'typesense-search'); ?></p>
                         </td>
                     </tr>
                 </table>

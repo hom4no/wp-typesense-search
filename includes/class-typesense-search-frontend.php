@@ -392,12 +392,8 @@ class Typesense_Search_Frontend {
                 width: 24px;
                 height: 24px;
             }
-        ";
-        
-        // Add mobile fullscreen styles only if enabled
-        if ($enable_mobile_fullscreen === '1') {
-            $custom_css .= "
-            /* Mobile styles */
+            
+            /* Responsive layout (always applied based on breakpoint) */
             @media (max-width: {$mobile_breakpoint}px) {
                 /* Layout zobrazení na mobilu - produkty nahoře, kategorie dole */
                 .typesense-search-results-content {
@@ -417,8 +413,73 @@ class Typesense_Search_Frontend {
                     border-left: none !important;
                     border-top: 1px solid #e5e7eb !important;
                     padding-top: 20px !important;
+                    width: 100% !important; /* Full width for sidebar */
+                    border-right: none !important; /* Remove sidebar right border */
                 }
-
+                
+                /* Remove padding from section titles */
+                .typesense-search-main .typesense-search-section-title {
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                }
+                
+                /* Remove padding from products grid */
+                .typesense-search-main .typesense-search-products-grid {
+                    padding-right: 0px !important;
+                    padding-left: 0px !important;
+                    grid-template-columns: 1fr !important; /* 1 column grid on mobile */
+                }
+                
+                /* Remove padding from sidebar section titles */
+                .typesense-search-sidebar .typesense-search-section-title {
+                    padding-right: 0px !important;
+                    padding-left: 0px !important;
+                }
+                
+                /* Remove padding from sidebar links */
+                .typesense-search-sidebar a {
+                    padding-right: 0px !important;
+                    padding-left: 0px !important;
+                }
+                
+                /* Remove padding from history sections */
+                .typesense-search-history {
+                    padding: 0px !important;
+                }
+                
+                .typesense-search-history-section {
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                }
+                
+                .typesense-search-history-title {
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                }
+                
+                .typesense-search-history-tags {
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                }
+                
+                .typesense-search-history-products {
+                    padding-left: 0px !important;
+                    padding-right: 0px !important;
+                }
+                
+                /* Prevent iOS zoom on input focus */
+                .typesense-search-input,
+                .typesense-search-container input[type='text'].typesense-search-input {
+                    font-size: 16px !important;
+                }
+            }
+        ";
+        
+        // Add mobile fullscreen styles only if enabled
+        if ($enable_mobile_fullscreen === '1') {
+            $custom_css .= "
+            /* Mobile styles - Fullscreen mode */
+            @media (max-width: {$mobile_breakpoint}px) {
                 /* Show mobile trigger button */
                 .typesense-search-mobile-trigger {
                     display: flex !important;
@@ -520,65 +581,6 @@ class Typesense_Search_Frontend {
                     box-shadow: none !important;
                 }
                 
-                .typesense-search-results-content {
-                    padding: 0 !important;
-                }
-                
-                .typesense-search-sidebar,
-                .typesense-search-main {
-                    padding-left: 0 !important;
-                    padding-right: 0 !important;
-                }
-                
-                /* Remove padding from section titles */
-                .typesense-search-main .typesense-search-section-title {
-                    padding-left: 0px !important;
-                    padding-right: 0px !important;
-                }
-                
-                /* Remove padding from products grid */
-                .typesense-search-main .typesense-search-products-grid {
-                    padding-right: 0px !important;
-                    padding-left: 0px !important;
-                }
-                
-                /* Remove padding from sidebar section titles */
-                .typesense-search-sidebar .typesense-search-section-title {
-                    padding-right: 0px !important;
-                    padding-left: 0px !important;
-                }
-                
-                /* Remove padding from sidebar links */
-                .typesense-search-sidebar a {
-                    padding-right: 0px !important;
-                    padding-left: 0px !important;
-                }
-                
-                /* Remove padding from history sections */
-                .typesense-search-history {
-                    padding: 0px !important;
-                }
-                
-                .typesense-search-history-section {
-                    padding-left: 0px !important;
-                    padding-right: 0px !important;
-                }
-                
-                .typesense-search-history-title {
-                    padding-left: 0px !important;
-                    padding-right: 0px !important;
-                }
-                
-                .typesense-search-history-tags {
-                    padding-left: 0px !important;
-                    padding-right: 0px !important;
-                }
-                
-                .typesense-search-history-products {
-                    padding-left: 0px !important;
-                    padding-right: 0px !important;
-                }
-                
                 .typesense-search-overlay.active {
                     display: none !important;
                 }
@@ -613,8 +615,10 @@ class Typesense_Search_Frontend {
         // Načíst skripty když je shortcode použit
         $this->enqueue_search_scripts();
         
+        $default_placeholder = get_option('typesense_search_placeholder_text', __('Hledat...', 'typesense-search'));
+        
         $atts = shortcode_atts(array(
-            'placeholder' => __('Hledat...', 'typesense-search'),
+            'placeholder' => $default_placeholder,
             'per_page' => 10,
         ), $atts);
         

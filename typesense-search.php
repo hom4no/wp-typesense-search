@@ -3,7 +3,7 @@
  * Plugin Name: Typesense Search
  * Plugin URI: https://github.com/hom4no/wp-typesense-search
  * Description: Základní plugin pro připojení k Typesense vyhledávacímu serveru
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Ondřej Homan
  * Author URI: https://github.com/hom4no
  * Requires at least: 5.8
@@ -38,7 +38,7 @@ $myUpdateChecker->setBranch('main');
 $myUpdateChecker->getVcsApi()->enableReleaseAssets();
 
 // Definice konstant
-define('TYPESENSE_SEARCH_VERSION', '1.0.0');
+define('TYPESENSE_SEARCH_VERSION', '1.0.1');
 define('TYPESENSE_SEARCH_PLUGIN_FILE', __FILE__);
 define('TYPESENSE_SEARCH_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TYPESENSE_SEARCH_PLUGIN_URL', plugin_dir_url(__FILE__));
