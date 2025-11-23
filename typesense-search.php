@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Typesense Search
- * Plugin URI: https://github.com/hom4no/typesense-search
+ * Plugin URI: https://github.com/hom4no/wp-typesense-search
  * Description: Základní plugin pro připojení k Typesense vyhledávacímu serveru
  * Version: 1.0.0
  * Author: Ondřej Homan
@@ -26,7 +26,7 @@ require 'includes/plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/hom4no/typesense-search',
+    'https://github.com/hom4no/wp-typesense-search',
     __FILE__,
     'typesense-search'
 );
