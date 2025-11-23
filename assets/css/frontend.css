@@ -1,0 +1,596 @@
+/* Typesense Search - Pilulka-style Design */
+
+/* Odstranit underline ze všech odkazů */
+.typesense-search-results a,
+.typesense-search-results a:hover,
+.typesense-search-results a:focus,
+.typesense-search-results a:visited {
+    text-decoration: none !important;
+}
+
+.typesense-search-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    height: auto;
+    z-index: 1001;
+}
+
+.typesense-search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #ffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    overflow: visible;
+}
+
+.typesense-search-wrapper:focus-within {
+    background: #ffff;
+    border-color: #e0e0e0;
+}
+
+.typesense-search-input,
+.typesense-search-container input[type="text"] {
+    flex: 1;
+    width: 100%;
+    padding: 0 60px 0 20px;
+    border: none !important;
+    background: transparent !important;
+    font-size: 14px;
+    line-height: 45px;
+    color: #334155;
+    outline: none;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.typesense-search-input::placeholder {
+    color: #64748b;
+}
+
+.typesense-search-button {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 60px !important;
+    height: 45px;
+    padding: 0;
+    background: #064740 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 25px !important;
+    font-size: 0;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.typesense-search-button:hover {
+    background: #146154 !important;
+}
+
+.typesense-search-button svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+/* Loader hidden as requested */
+.typesense-search-loader {
+    display: none !important;
+}
+
+.typesense-search-results {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 700px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    width: 1100px;
+    max-width: 95vw;
+}
+
+.typesense-search-results.typesense-search-results-narrow {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+.typesense-search-results.active {
+    display: block;
+}
+
+.typesense-search-results.empty {
+    display: none;
+}
+
+.typesense-search-results-content {
+    display: flex;
+    gap: 0;
+}
+
+.typesense-search-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    border-right: 1px solid #f0f0f0;
+    padding: 12px 0;
+}
+
+.typesense-search-main {
+    flex: 1;
+    padding: 12px 0;
+}
+
+.typesense-search-section {
+    padding: 0;
+}
+
+.typesense-search-section:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.typesense-search-section-title {
+    padding: 12px 16px 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    background: transparent;
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0;
+}
+
+.typesense-search-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    transition: background 0.15s ease;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.typesense-search-item:hover {
+    background: #f5f5f5;
+}
+
+.typesense-search-item-image {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.typesense-search-products-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 16px;
+}
+
+.typesense-search-product-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease;
+    background: #fff;
+}
+
+.typesense-search-product-image-wrapper {
+    width: 100px;
+    height: 75px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+}
+
+.typesense-search-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.typesense-search-product-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 75px;
+    justify-content: space-between;
+}
+
+.typesense-search-product-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.typesense-search-product-card:hover .typesense-search-product-name {
+    text-decoration: underline;
+}
+
+.typesense-search-product-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 0;
+    font-size: 11px;
+    color: #666;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.typesense-search-product-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.typesense-search-product-manufacturer {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.3;
+    text-align: left;
+}
+
+.typesense-search-product-stock {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+.typesense-search-product-stock.in-stock {
+    background: #d4edda;
+    color: #155724;
+}
+
+.typesense-search-product-stock.out-of-stock {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.typesense-search-product-stock.on-backorder {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.typesense-search-product-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+    line-height: 1.3;
+    text-align: right;
+}
+
+.typesense-search-product-price .sale {
+    color: #d63638;
+}
+
+.typesense-search-product-price .regular {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+    font-weight: 400;
+    margin-right: 6px;
+}
+
+.typesense-search-item-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typesense-search-item-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.typesense-search-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.typesense-search-item-name {
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.typesense-search-item-meta {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+}
+
+.typesense-search-item-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-left: 12px;
+    white-space: nowrap;
+}
+
+.typesense-search-item-price .sale {
+    color: #d63638;
+}
+
+.typesense-search-item-price .regular {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 12px;
+    font-weight: 400;
+    margin-right: 6px;
+}
+
+.typesense-search-no-results {
+    padding: 24px 16px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+/* History & Recent View */
+.typesense-search-history {
+    padding: 16px;
+}
+
+.typesense-search-history-section {
+    margin-bottom: 20px;
+}
+
+.typesense-search-history-section:last-child {
+    margin-bottom: 0;
+}
+
+.typesense-search-history-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.typesense-search-history-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.typesense-search-history-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.typesense-search-history-tag:hover {
+    /* Colors are set via inline CSS from admin settings */
+    background: #fff;
+}
+
+.typesense-search-history-tag svg {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    color: #999;
+    transition: color 0.2s ease;
+}
+
+.typesense-search-history-products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+@media (min-width: 768px) {
+    .typesense-search-history-products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.typesense-search-history-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.typesense-search-history-product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.typesense-search-history-product-name {
+    font-size: 12px;
+    color: #333;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Scrollbar styling */
+.typesense-search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.typesense-search-results::-webkit-scrollbar-track {
+    background: #f8f8f8;
+    border-radius: 0 8px 8px 0;
+}
+
+.typesense-search-results::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.typesense-search-results::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .typesense-search-container {
+        max-width: 100%;
+    }
+    
+    .typesense-search-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .typesense-search-results {
+        width: 100%;
+        max-width: 100vw;
+    }
+    
+    .typesense-search-results-content {
+        flex-direction: column;
+    }
+    
+    .typesense-search-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .typesense-search-products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Empty State Styles */
+.typesense-search-empty-state {
+    padding: 8px 0;
+}
+
+/* Visited products specific styles */
+.typesense-search-product-card.visited-product {
+    min-height: auto;
+    padding: 8px;
+}
+
+.typesense-search-product-card.visited-product .typesense-search-product-content {
+    height: auto;
+    justify-content: center;
+}
+
+.typesense-search-product-card.visited-product .typesense-search-product-name {
+    font-size: 12px;
+    margin: 0;
+    -webkit-line-clamp: 2;
+}
+
+/* Overlay */
+.typesense-search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: auto;
+}
+
+.typesense-search-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile - products first */
+@media (max-width: 768px) {
+    .typesense-search-results-content {
+        flex-direction: column;
+    }
+    
+    .typesense-search-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+        order: 2;
+    }
+    
+    .typesense-search-main {
+        order: 1;
+    }
+    
+    /* Prevent iOS zoom on input focus */
+    .typesense-search-input,
+    .typesense-search-container input[type="text"] {
+        font-size: 16px !important;
+    }
+}
